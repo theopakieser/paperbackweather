@@ -130,3 +130,10 @@ h1 {
 .discover-button:hover {
   transform: translateY(-2px);
 }
+
+.selected-mood {
+  color: #665d55;
+  font-family: Georgia, serif;
+  font-style: italic;
+  margin: 20px 0;
+}

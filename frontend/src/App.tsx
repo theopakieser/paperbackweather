@@ -1,6 +1,29 @@
 import './App.css'
+import {useState} from "react"
+
+type Book = {
+  title: string
+  author: string
+  progress: number
+}
+
+const currentBook: Book = {
+  title: "The Illiad",
+  author:  "Homer",
+  progress: 23,
+}
+
+const moods = [
+  "🍂 Autumn",
+  "☕ Cosy",
+  "🌙 Late Night",
+  "🕯️ Dark Academia",
+  "🌧️ Rainy",
+  "🎃 Spooky",
+]
 
 function App() {
+  const [selectedMood, setSelectedMood] = useState<string | null>(null)
   return (
     <main>
       <header>
@@ -17,15 +40,17 @@ function App() {
           </div>
 
           <div className="book-info">
-            <h2>The Secret History</h2>
-            <p>Donna Tartt</p>
+            <h2>{currentBook.title}</h2>
+            <p>{currentBook.author}</p>
 
             <div className="progress">
               <div className="progress-bar">
-                <div className="progress-fill"></div>
+                <div 
+                className="progress-fill"
+                style={{width: `${currentBook.progress}%`}}
+                ></div>
               </div>
-
-              <span>72%</span>
+              <span>{currentBook.progress}%</span>
             </div>
           </div>
         </div>
@@ -35,13 +60,20 @@ function App() {
         <p className="section-label">WHAT ARE YOU IN THE MOOD FOR?</p>
 
         <div className="moods">
-          <button>🍂 Autumn</button>
-          <button>☕ Cosy</button>
-          <button>🌙 Late Night</button>
-          <button>🕯️ Dark Academia</button>
-          <button>🌧️ Rainy</button>
-          <button>🎃 Spooky</button>
+          {moods.map((mood) => (
+            <button key = {mood}
+            onClick={() => setSelectedMood(mood)}
+            >
+              {mood}
+            </button>
+          ))}
         </div>
+
+  {selectedMood && (
+    <p className="selected-mood">
+      You're in the mood for {selectedMood}.
+    </p>
+  )}
 
         <button className="discover-button">
           Find me a book
