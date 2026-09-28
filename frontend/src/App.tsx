@@ -125,18 +125,34 @@ function App() {
     </p>
   )}
 
-        <button className="discover-button" onClick={findBook}>
+        <button 
+        className="discover-button" 
+        onClick={findBook} 
+        disabled={!selectedMood}>
+          
           Find me a book
         </button>
 
-        {recommendedBook && (
-          <div className="recommendation">
-            <p className="section-label">YOUR PAPERBACK WEATHER PICK</p>
+{recommendedBook && (
+  <div className="recommendation">
+    <div className="recommendation-cover">
+      BOOK
+    </div>
 
-            <h2>{recommendedBook.title}</h2>
-            <p>{recommendedBook.author}</p>
-          </div>
-        )}
+    <div className="recommendation-info">
+      <p className="section-label">YOUR PAPERBACK WEATHER PICK</p>
+
+      <h2>{recommendedBook.title}</h2>
+      <p>{recommendedBook.author}</p>
+
+      {selectedMood && (
+        <span className="recommendation-mood">
+          {selectedMood}
+        </span>
+      )}
+    </div>
+  </div>
+)}
       </section>
     </main>
   )
