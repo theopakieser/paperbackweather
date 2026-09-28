@@ -22,8 +22,58 @@ const moods = [
   "🎃 Spooky",
 ]
 
+const recommendations = [
+  {
+    title: "The Secret History",
+    author: "Donna Tart",
+    moods: ["🕯️ Dark Academia", "🍂 Autumn"]
+  },
+
+    {
+    title: "The Very Secret Society of Irregular Witches",
+    author: "Sangu Mandanna",
+    moods: ["☕ Cosy", "🎃 Spooky"]
+  },
+  
+  {
+    title: "The Night Circus",
+    author: "Erin Morgenstern",
+    moods: ["🌙 Late Night", "🎃 Spooky"]
+  },
+  
+  {
+    title: "The Guernsey Literary and Potato Peel Pie Society",
+    author: "Mary Ann Shaffer",
+    moods: ["☕ Cosy", "🌧️ Rainy"]
+  },
+]
+
 function App() {
   const [selectedMood, setSelectedMood] = useState<string | null>(null)
+  const [recommendedBook, setRecommendedBook] = useState<{
+    title: string
+    author: string
+  } | null >(null)
+
+  //recommendation function
+  const findBook = () => {
+    if (!selectedMood) {
+      return
+    }
+
+    const matchingBooks = recommendations.filter((book) =>
+      book.moods.includes(selectedMood)
+  )
+
+  if (matchingBooks.length == 0){
+    setRecommendedBook(null)
+    return
+  }
+
+  const randomBook = matchingBooks[Math.floor(Math.random() * matchingBooks.length)]
+
+  setRecommendedBook(randomBook)
+  }
   return (
     <main>
       <header>
@@ -75,9 +125,18 @@ function App() {
     </p>
   )}
 
-        <button className="discover-button">
+        <button className="discover-button" onClick={findBook}>
           Find me a book
         </button>
+
+        {recommendedBook && (
+          <div className="recommendation">
+            <p className="section-label">YOUR PAPERBACK WEATHER PICK</p>
+
+            <h2>{recommendedBook.title}</h2>
+            <p>{recommendedBook.author}</p>
+          </div>
+        )}
       </section>
     </main>
   )
